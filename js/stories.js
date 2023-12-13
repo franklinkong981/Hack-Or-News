@@ -6,7 +6,7 @@ let storyList;
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
-  storyList = await StoryList.getStories();
+  storyList = await StoryList.getStories(); //Loading message will display while this is waiting to complete.
   $storiesLoadingMsg.remove();
 
   putStoriesOnPage();

@@ -12,9 +12,10 @@ function navAllStories(evt) {
   putStoriesOnPage();
 }
 
+/*Event delegation: If user clicks on the Hack or News logo on top left of nav bar, run function navAllStories. */
 $body.on("click", "#nav-all", navAllStories);
 
-/** Show login/signup on click on "login" */
+/** Show login/signup form when user clicks on "login" on upper right of navbar. */
 
 function navLoginClick(evt) {
   console.debug("navLoginClick", evt);
@@ -29,7 +30,7 @@ $navLogin.on("click", navLoginClick);
 
 function updateNavOnLogin() {
   console.debug("updateNavOnLogin");
-  $(".main-nav-links").show();
+  $(".main-nav-links").show(); //Things you'll add like add story form link, favorite story list, stories you uploaded list.
   $navLogin.hide();
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();

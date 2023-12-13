@@ -21,7 +21,7 @@ async function login(evt) {
   // which we'll make the globally-available, logged-in user.
   currentUser = await User.login(username, password);
 
-  $loginForm.trigger("reset");
+  $loginForm.trigger("reset"); //Automatically resets all fields in the login form (all text inputs become blank).
 
   saveUserCredentialsInLocalStorage();
   updateUIOnUserLogin();
@@ -39,7 +39,7 @@ async function signup(evt) {
   const username = $("#signup-username").val();
   const password = $("#signup-password").val();
 
-  // User.signup retrieves user info from API and returns User instance
+  // User.signup adds then and retrieves user info from API and returns User instance
   // which we'll make the globally-available, logged-in user.
   currentUser = await User.signup(username, password, name);
 
@@ -59,7 +59,7 @@ $signupForm.on("submit", signup);
 function logout(evt) {
   console.debug("logout", evt);
   localStorage.clear();
-  location.reload();
+  location.reload(); //refresh the page
 }
 
 $navLogOut.on("click", logout);
@@ -110,6 +110,7 @@ function saveUserCredentialsInLocalStorage() {
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
+  hidePageComponents();
   $allStoriesList.show();
 
   updateNavOnLogin();
