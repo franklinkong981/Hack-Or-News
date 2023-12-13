@@ -25,7 +25,8 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    let hostname = $('<a>').prop('href', this.url).prop('hostname'); //Creates <a> element, sets href attribute to this.url, and gets its hostname property value.
+    return hostname;
   }
 }
 
