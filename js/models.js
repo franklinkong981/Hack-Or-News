@@ -213,6 +213,11 @@ class User {
     }
   }
 
+  //When user creates a new story, add it to the user's ownStories list.
+  addStoryToOwnStories(uploadedStory) {
+    this.ownStories.unshift(uploadedStory);
+  }
+
   //calls the Hack or Snooze API to add the Story with the specific StoryId to the user's favorite stories, then make user instance of updated User and return it.
   static async addStoryToFavorites(token, username, storyId) {
     console.debug("addStoryToFavorites");

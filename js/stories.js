@@ -79,7 +79,7 @@ $allStoriesList.on("click", ".favorite-button", async function(event) {
 });
 
 //When user submits the add story form, get the data from the form, call storyList's add story method to add the story to its list of stories and the API,
-// and then put the new story onto the page.
+// add the story to the User's list of own stories, and then put the new story onto the page.
 async function addStoryToPage(event) {
   console.debug("addStoryToPage", event);
   event.preventDefault();
@@ -89,7 +89,8 @@ async function addStoryToPage(event) {
   const url = $("#add-new-story-url").val();
   const newStory = {author, title, url};
 
-  await storyList.addStory(currentUser, newStory);
+  const storyToAdd = await storyList.addStory(currentUser, newStory);
+  currentUser.addStoryToOwnStories(storyToAdd);
 
   hidePageComponents();
   putStoriesOnPage();
@@ -119,9 +120,9 @@ function putOwnStoriesOnPage() {
 
   $allStoriesList.empty();
 
-  // loop through all of the user's own stories and generate HTML for them
-  for (let ownStory of currentUser.ownStories) {
-    const $ownStory = generateStoryMarkup(ownStory, true);
+  // loop through all of the user's own stories from least to most recent and generate HTML for them.
+  for (let i = currentUser.ownStories.length-1; i >= 0; i--) {
+    const $ownStory = generateStoryMarkup(currentUser.ownStories[i], true);
     $allStoriesList.append($ownStory);
   }
 
