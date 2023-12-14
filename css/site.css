@@ -102,7 +102,7 @@ form > hr {
   border: 1px solid lightgray;
 }
 
-.login-input label {
+.login-input label, .add-new-story input {
   width: 70px;
 }
 

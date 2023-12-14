@@ -50,3 +50,23 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+//When user submits the add story form, get the data from the form, call storyList's add story method to add the story to its list of stories and the API,
+// and then put the new story onto the page.
+async function addStoryToPage(event) {
+  console.debug("addStoryToPage", event);
+  event.preventDefault();
+
+  const author = $("#add-new-story-author").val();
+  const title = $("#add-new-story-title").val();
+  const url = $("#add-new-story-url").val();
+  const newStory = {author, title, url};
+
+  await storyList.addStory(currentUser, newStory);
+
+  hidePageComponents();
+  putStoriesOnPage();
+
+
+}
+$addStoryForm.on("submit", addStoryToPage);

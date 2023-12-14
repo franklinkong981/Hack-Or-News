@@ -85,7 +85,7 @@ class StoryList {
     let { story } = response.data;
 
     let newStoryAdded = new Story(story);
-    this.stories.push(newStoryAdded);
+    this.stories.unshift(newStoryAdded);
     return newStoryAdded;
   }
 }

@@ -9,6 +9,6 @@
   width: 8rem;
 }
 
-.account-forms-container {
+.account-forms-container, .add-story-form-container {
   padding-left: 20px;
 }
