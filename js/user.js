@@ -24,6 +24,7 @@ async function login(evt) {
   $loginForm.trigger("reset"); //Automatically resets all fields in the login form (all text inputs become blank).
 
   saveUserCredentialsInLocalStorage();
+  updateDisplayedProfileInfo(currentUser);
   updateUIOnUserLogin();
 }
 
@@ -44,12 +45,29 @@ async function signup(evt) {
   currentUser = await User.signup(username, password, name);
 
   saveUserCredentialsInLocalStorage();
+  updateDisplayedProfileInfo(currentUser);
   updateUIOnUserLogin();
 
   $signupForm.trigger("reset");
 }
 
 $signupForm.on("submit", signup);
+
+//Whenever user logs in/signs up OR is logged in automatically, update the profile info that is displayed when they click their username on the navbar.
+function updateDisplayedProfileInfo(updatedUser) {
+  $profileNameInfo.text(`Name: ${updatedUser.name}`);
+  $profileUsernameInfo.text(`Username: ${updatedUser.username}`);
+  $profileCreatedAccountInfo.text(`Account Created At: ${updatedUser.createdAt}`);
+}
+
+//When logged in user clicks on their username on upper right of sidebar, their profile information will be displayed.
+function displayUserProfileInfo(event) {
+  console.debug("display user profile info", event);
+  hidePageComponents();
+  $userProfileInfo.show();
+}
+
+$navUserProfile.on("click", displayUserProfileInfo);
 
 /** Handle click of logout button
  *

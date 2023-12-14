@@ -18,6 +18,11 @@ const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 
+const $userProfileInfo = $("#user-profile-info");
+const $profileNameInfo = $("#profile-name");
+const $profileUsernameInfo = $("#profile-username");
+const $profileCreatedAccountInfo = $("#profile-account-created");
+
 //ALSO: We have the global variables storyList (initialized in getAndShowStoriesOnStart) as well as currentUser(initalized in checkForRememberedUser)
 
 /** To make it easier for individual components to show just themselves, this
@@ -31,6 +36,7 @@ function hidePageComponents() {
     $loginForm,
     $signupForm,
     $addStoryForm,
+    $userProfileInfo
   ];
   components.forEach(c => c.hide()); //Hide everything except the navbar, then re-display what we need.
 }
@@ -45,7 +51,10 @@ async function start() {
   await getAndShowStoriesOnStart(); //Calls API to get all existing stories and displays them on the page.
 
   // if we got a logged-in user
-  if (currentUser) updateUIOnUserLogin();
+  if (currentUser) {
+    updateDisplayedProfileInfo(currentUser);
+    updateUIOnUserLogin();
+  }
 }
 
 // Once the DOM is entirely loaded, begin the app

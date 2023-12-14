@@ -9,6 +9,10 @@
   width: 8rem;
 }
 
-.account-forms-container, .add-story-form-container {
+.user-profile-info-container, .account-forms-container, .add-story-form-container {
   padding-left: 20px;
+}
+
+#profile-info-headline {
+  margin: 20px 0;
 }
