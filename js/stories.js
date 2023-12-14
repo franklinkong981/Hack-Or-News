@@ -109,4 +109,19 @@ function putFavoritesOnPage() {
   $allStoriesList.show();
 }
 
+//Gets the current logged in user's list of stories they uploaded, generates their HTML, and displays them on the page.
+function putOwnStoriesOnPage() {
+  console.debug("Put Own Stories on Page");
+
+  $allStoriesList.empty();
+
+  // loop through all of the user's own stories and generate HTML for them
+  for (let ownStory of currentUser.ownStories) {
+    const $ownStory = generateStoryMarkup(ownStory);
+    $allStoriesList.append($ownStory);
+  }
+
+  $allStoriesList.show();
+}
+
 

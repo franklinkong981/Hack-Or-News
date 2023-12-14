@@ -31,6 +31,14 @@ function navFavoritesClick(event) {
 }
 $navFavorites.on("click", navFavoritesClick);
 
+//When user clicks on the "My Stories" navbar link, display only the stories that were uploaded by the user.
+function navMyStoriesClick(event) {
+  console.log("navMyStoriesClick", event);
+  hidePageComponents();
+  putOwnStoriesOnPage();
+}
+$navMyStories.on("click", navMyStoriesClick);
+
 /** Show login/signup form when user clicks on "login" on upper right of navbar. */
 
 function navLoginClick(evt) {
