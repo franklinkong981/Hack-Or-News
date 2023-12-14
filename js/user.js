@@ -58,8 +58,8 @@ $signupForm.on("submit", signup);
 
 function logout(evt) {
   console.debug("logout", evt);
-  localStorage.clear();
-  location.reload(); //refresh the page
+  localStorage.clear(); //It's crucial that this comes before the page refresh so that signed in nav links aren't displayed when the page is refreshed.
+  location.reload(); //refresh the page. 
 }
 
 $navLogOut.on("click", logout);

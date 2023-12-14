@@ -37,12 +37,39 @@
       <div class="navbar-brand">
         <a class="nav-link" href="#" id="nav-all">Hack or News</a>
       </div>
+      <div class="main-nav-links hidden">
+        <a class="nav-link" href="#" id="nav-add-story">Add Story</a>
+        <a class="nav-link" href="#" id="nav-favorites">Favorites</a>
+        <a class="nav-link" href="#" id="nav-my-stories">My Stories</a>
+      </div>
       <div class="nav-right">
         <a class="nav-link" href="#" id="nav-login">login/signup</a>
         <a class="nav-link" href="#" id="nav-user-profile"></a>
         <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
       </div>
     </nav>
+
+    <section class="add-story-form-container container">
+
+      <!-- Login form -->
+      <form action="#" id="add-new-story-form" class="account-form hidden" method="post">
+        <h4>Add New Story</h4>
+        <div class="add-new-story-input">
+          <label for="add-new-story-author">author</label>
+          <input id="add-new-story-author" type="text" autocapitalize="words"/>
+        </div>
+        <div class="add-new-story-input">
+          <label for="add-new-story-title">title</label>
+          <input id="add-new-story-title" type="text" autocapitalize="words"/>
+        </div>
+        <div class="add-new-story-input">
+          <label for="add-new-story-url">title</label>
+          <input id="add-new-story-url" type="url" autocapitalize="words"/>
+        </div>
+        <button type="submit">login</button>
+        <hr>
+      </form>
+    </section>
 
     <!-- area for stories (all stories, user stories, favorites) -->
     <section class="stories-container container">
