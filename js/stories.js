@@ -106,10 +106,9 @@ async function addStoryToPage(event) {
   const storyToAdd = await storyList.addStory(currentUser, newStory);
   currentUser.addStoryToOwnStories(storyToAdd);
 
+  $addStoryForm.trigger("reset");
   hidePageComponents();
   putStoriesOnPage();
-
-
 }
 $addStoryForm.on("submit", addStoryToPage);
 

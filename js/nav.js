@@ -15,9 +15,10 @@ function navAllStories(evt) {
 /*Event delegation: If user clicks on the Hack or News logo on top left of nav bar, run function navAllStories. */
 $body.on("click", "#nav-all", navAllStories);
 
-//When user clicks on the "Add Story" navbar link, show the form above the story list that allows the user to add a story to the list.
+//When user clicks on the "Add Story" navbar link, show the form that allows the user to add a story to the list.
 function navAddStoryClick(event) {
   console.log("navAddStoryClick", event);
+  hidePageComponents();
   $addStoryForm.show();
 }
 

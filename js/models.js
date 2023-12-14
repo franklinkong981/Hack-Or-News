@@ -241,7 +241,7 @@ class User {
 
   //When user creates a new story, add it to the user's ownStories list.
   addStoryToOwnStories(uploadedStory) {
-    this.ownStories.unshift(uploadedStory);
+    this.ownStories.push(uploadedStory);
   }
 
   //When user deletes a story, remove it from the user's ownStories list.
