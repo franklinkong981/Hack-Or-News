@@ -23,8 +23,15 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
+  let buttonText;
+  if (currentUser) {
+    buttonText = currentUser.isStoryInFavorites(story) ? "Remove from Favorites" : "Add to Favorites";
+  }
+  let buttonHTML = currentUser ? `<button class="favorite-button">${buttonText}</button>` : ``;
+
   return $(`
       <li id="${story.storyId}">
+        ${buttonHTML}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -51,6 +58,22 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
+//If user clicks on the button that says "Add to Favorites" or "Remove from Favorites", the following function will be executed:
+//If the story associated with the button is currently in the User's favorite stories, it will be removed from the User's favorite stories.
+//If the story associated with the button is currently not in the User's favorite stories, it will be added to the User's favorite stories.
+$allStoriesList.on("click", ".favorite-button", async function(event) {
+  console.debug("Add/Remove from Favorites button clicked");
+
+  const currentStoryId = $(this).parent().attr("id");
+  if (!(currentUser.isStoryIdInFavorites(currentStoryId))) {
+    currentUser = await User.addStoryToFavorites(currentUser.loginToken, currentUser.username, currentStoryId);
+    $(this).text("Remove from Favorites");
+  } else {
+    currentUser = await User.removeStoryFromFavorites(currentUser.loginToken, currentUser.username, currentStoryId);
+    $(this).text("Add to Favorites");
+  }
+});
+
 //When user submits the add story form, get the data from the form, call storyList's add story method to add the story to its list of stories and the API,
 // and then put the new story onto the page.
 async function addStoryToPage(event) {
@@ -70,3 +93,5 @@ async function addStoryToPage(event) {
 
 }
 $addStoryForm.on("submit", addStoryToPage);
+
+

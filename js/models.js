@@ -143,7 +143,7 @@ class User {
         name: user.name,
         createdAt: user.createdAt,
         favorites: user.favorites,
-        ownStories: user.stories
+        ownStories: user.ownStories
       },
       response.data.token
     );
@@ -170,7 +170,7 @@ class User {
         name: user.name,
         createdAt: user.createdAt,
         favorites: user.favorites,
-        ownStories: user.stories
+        ownStories: user.ownStories
       },
       response.data.token
     );
@@ -196,7 +196,7 @@ class User {
           name: user.name,
           createdAt: user.createdAt,
           favorites: user.favorites,
-          ownStories: user.stories
+          ownStories: user.ownStories
         },
         token
       );
@@ -208,12 +208,15 @@ class User {
 
   //calls the Hack or Snooze API to add the Story with the specific StoryId to the user's favorite stories, then make user instance of updated User and return it.
   static async addStoryToFavorites(token, username, storyId) {
+    console.debug("addStoryToFavorites");
+
     const response = await axios({
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "POST",
       data: { token },
     });
 
+    console.log(response.data);
     let { user } = response.data;
 
     return new User(
@@ -222,7 +225,7 @@ class User {
         name: user.name,
         createdAt: user.createdAt,
         favorites: user.favorites,
-        ownStories: user.stories
+        ownStories: user.ownStories
       },
       token
     );
@@ -230,12 +233,15 @@ class User {
 
   //calls the Hack or Snooze API to remove the Story with the specific StoryId to the user's favorite stories, then make user instance of updated User and return it.
   static async removeStoryFromFavorites(token, username, storyId) {
+    console.debug("removeStoryFromFavorites");
+
     const response = await axios({
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       method: "DELETE",
       data: { token },
     });
 
+    console.log(response.data);
     let { user } = response.data;
 
     return new User(
@@ -244,9 +250,29 @@ class User {
         name: user.name,
         createdAt: user.createdAt,
         favorites: user.favorites,
-        ownStories: user.stories
+        ownStories: user.ownStories
       },
       token
     );
+  }
+
+  //Checks to see whether a Story is found in one of the Story objects in the User's favorites.
+  isStoryInFavorites(story) {
+    for (let favoriteStory of this.favorites) {
+      if (story.storyId === favoriteStory.storyId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  //Checks to see whether a story ID is found as the story ID in one of the Story objects in the User's favorites.
+  isStoryIdInFavorites(storyId) {
+    for (let favoriteStory of this.favorites) {
+      if (storyId === favoriteStory.storyId) {
+        return true;
+      }
+    }
+    return false;
   }
 }
