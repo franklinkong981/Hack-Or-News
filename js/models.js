@@ -75,7 +75,6 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    // UNIMPLEMENTED: complete this function!
     const {title, author, url} = newStory;
     const response = await axios({
       url: `${BASE_URL}/stories`,
@@ -85,8 +84,35 @@ class StoryList {
     let { story } = response.data;
 
     let newStoryAdded = new Story(story);
-    this.stories.unshift(newStoryAdded);
+    this.addStoryToStoryList(newStoryAdded);
     return newStoryAdded;
+  }
+
+  addStoryToStoryList(newStory) {
+    this.stories.unshift(newStory);
+  }
+
+  //Deletes the story with id of storyId from the Hack or Snooze API and deletes this story from the curent story list.
+  async deleteStory(user, storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "DELETE",
+      data: { token: user.loginToken},
+    });
+    let { story } = response.data;
+
+    let storyDeleted = new Story(story);
+    this.removeStoryFromStoryList(storyDeleted);
+    return storyDeleted;
+  }
+
+  removeStoryFromStoryList(storyToDelete) {
+    for (let i = 0; i < this.stories.length; i++) {
+      if (storyToDelete.storyId === this.stories[i].storyId) {
+        this.stories.splice(i, 1);
+        break;
+      }
+    }
   }
 }
 
@@ -216,6 +242,16 @@ class User {
   //When user creates a new story, add it to the user's ownStories list.
   addStoryToOwnStories(uploadedStory) {
     this.ownStories.unshift(uploadedStory);
+  }
+
+  //When user deletes a story, remove it from the user's ownStories list.
+  removeStoryFromOwnStories(deletedStory) {
+    for (let i = 0; i < this.ownStories.length; i++) {
+      if (deletedStory.storyId === this.ownStories[i].storyId) {
+        this.ownStories.splice(i, 1);
+        break;
+      }
+    }
   }
 
   //calls the Hack or Snooze API to add the Story with the specific StoryId to the user's favorite stories, then make user instance of updated User and return it.

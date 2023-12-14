@@ -66,7 +66,7 @@ function putStoriesOnPage() {
 //If the story associated with the button is currently in the User's favorite stories, it will be removed from the User's favorite stories.
 //If the story associated with the button is currently not in the User's favorite stories, it will be added to the User's favorite stories.
 $allStoriesList.on("click", ".favorite-button", async function(event) {
-  console.debug("Add/Remove from Favorites button clicked");
+  console.debug("Add/Remove from Favorites button clicked", event);
 
   const currentStoryId = $(this).parent().attr("id");
   if (!(currentUser.isStoryIdInFavorites(currentStoryId))) {
@@ -77,6 +77,20 @@ $allStoriesList.on("click", ".favorite-button", async function(event) {
     $(this).text("Add to Favorites");
   }
 });
+
+//If user is viewing only their own stories and they click the Delete button next to one of their stories, the story will be deleted from 3 places:
+// The API (a call will be made to delete the Story information), the current Story List of all stories to be displayed, and the current logged in user's
+// list of own stories. The user's updated list of own stories will then be displayed.
+$allStoriesList.on("click", ".delete-button", async function(event) {
+  console.debug("Delete button clicked", event);
+
+  const deletedStoryId = $(this).parent().attr("id");
+  const deletedStory = await storyList.deleteStory(currentUser, deletedStoryId);
+  currentUser.removeStoryFromOwnStories(deletedStory);
+
+  hidePageComponents();
+  putOwnStoriesOnPage();
+})
 
 //When user submits the add story form, get the data from the form, call storyList's add story method to add the story to its list of stories and the API,
 // add the story to the User's list of own stories, and then put the new story onto the page.
