@@ -94,4 +94,19 @@ async function addStoryToPage(event) {
 }
 $addStoryForm.on("submit", addStoryToPage);
 
+//Gets the current logged in user's list of favorited stories, generates their HTML, and displays them on the page.
+function putFavoritesOnPage() {
+  console.debug("Put Favorites on Page");
+
+  $allStoriesList.empty();
+
+  // loop through all of the user's favorite stories and generate HTML for them
+  for (let favoriteStory of currentUser.favorites) {
+    const $favoriteStory = generateStoryMarkup(favoriteStory);
+    $allStoriesList.append($favoriteStory);
+  }
+
+  $allStoriesList.show();
+}
+
 

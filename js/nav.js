@@ -23,6 +23,14 @@ function navAddStoryClick(event) {
 
 $navAddStory.on("click", navAddStoryClick);
 
+//When user clicks on the "Favorites" navbar link, display only the stories that the user has favorited.
+function navFavoritesClick(event) {
+  console.log("navFavoritesClick", event);
+  hidePageComponents();
+  putFavoritesOnPage();
+}
+$navFavorites.on("click", navFavoritesClick);
+
 /** Show login/signup form when user clicks on "login" on upper right of navbar. */
 
 function navLoginClick(evt) {

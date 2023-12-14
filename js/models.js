@@ -135,15 +135,17 @@ class User {
       data: { user: { username, password, name } },
     });
 
-    let { user } = response.data
+    let { user } = response.data;
+    let userFavorites = user.favorites.map(s => new Story(s));
+    let userOwnStories = user.stories.map(s => new Story(s));
 
     return new User(
       {
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
-        favorites: user.favorites,
-        ownStories: user.ownStories
+        favorites: userFavorites,
+        ownStories: userOwnStories
       },
       response.data.token
     );
@@ -163,14 +165,16 @@ class User {
     });
 
     let { user } = response.data;
+    let userFavorites = user.favorites.map(s => new Story(s));
+    let userOwnStories = user.stories.map(s => new Story(s));
 
     return new User(
       {
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
-        favorites: user.favorites,
-        ownStories: user.ownStories
+        favorites: userFavorites,
+        ownStories: userOwnStories
       },
       response.data.token
     );
@@ -187,16 +191,19 @@ class User {
         method: "GET",
         params: { token },
       });
-
+  
       let { user } = response.data;
+      let userFavorites = user.favorites.map(s => new Story(s));
+      let userOwnStories = user.stories.map(s => new Story(s));
+      
 
       return new User(
         {
           username: user.username,
           name: user.name,
           createdAt: user.createdAt,
-          favorites: user.favorites,
-          ownStories: user.ownStories
+          favorites: userFavorites,
+          ownStories: userOwnStories
         },
         token
       );
@@ -216,16 +223,17 @@ class User {
       data: { token },
     });
 
-    console.log(response.data);
     let { user } = response.data;
+    let userFavorites = user.favorites.map(s => new Story(s));
+    let userOwnStories = user.stories.map(s => new Story(s));
 
     return new User(
       {
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
-        favorites: user.favorites,
-        ownStories: user.ownStories
+        favorites: userFavorites,
+        ownStories: userOwnStories
       },
       token
     );
@@ -241,16 +249,17 @@ class User {
       data: { token },
     });
 
-    console.log(response.data);
     let { user } = response.data;
+    let userFavorites = user.favorites.map(s => new Story(s));
+    let userOwnStories = user.stories.map(s => new Story(s));
 
     return new User(
       {
         username: user.username,
         name: user.name,
         createdAt: user.createdAt,
-        favorites: user.favorites,
-        ownStories: user.ownStories
+        favorites: userFavorites,
+        ownStories: userOwnStories
       },
       token
     );
