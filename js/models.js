@@ -205,4 +205,48 @@ class User {
       return null;
     }
   }
+
+  //calls the Hack or Snooze API to add the Story with the specific StoryId to the user's favorite stories, then make user instance of updated User and return it.
+  static async addStoryToFavorites(token, username, storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      method: "POST",
+      data: { token },
+    });
+
+    let { user } = response.data;
+
+    return new User(
+      {
+        username: user.username,
+        name: user.name,
+        createdAt: user.createdAt,
+        favorites: user.favorites,
+        ownStories: user.stories
+      },
+      token
+    );
+  }
+
+  //calls the Hack or Snooze API to remove the Story with the specific StoryId to the user's favorite stories, then make user instance of updated User and return it.
+  static async removeStoryFromFavorites(token, username, storyId) {
+    const response = await axios({
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      method: "DELETE",
+      data: { token },
+    });
+
+    let { user } = response.data;
+
+    return new User(
+      {
+        username: user.username,
+        name: user.name,
+        createdAt: user.createdAt,
+        favorites: user.favorites,
+        ownStories: user.stories
+      },
+      token
+    );
+  }
 }
