@@ -15,23 +15,27 @@ async function getAndShowStoriesOnStart() {
 /**
  * A render method to render HTML for an individual Story instance
  * - story: an instance of Story
+ * - includeDeleteButton: Boolean indicating whether we are including a delete button next to each story.
+ * If we are displaying only the user's own stories, then includeDeleteButton is true. Otherwise, it's false.
  *
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, includeDeleteButton) {
   // console.debug("generateStoryMarkup", story);
+  let deleteButtonHTML = includeDeleteButton ? `<button class="delete-button">Delete Story</button>` : ``;
 
   const hostName = story.getHostName();
-  let buttonText;
+  let favoriteButtonText = "";
   if (currentUser) {
-    buttonText = currentUser.isStoryInFavorites(story) ? "Remove from Favorites" : "Add to Favorites";
+    favoriteButtonText = currentUser.isStoryInFavorites(story) ? "Remove from Favorites" : "Add to Favorites";
   }
-  let buttonHTML = currentUser ? `<button class="favorite-button">${buttonText}</button>` : ``;
+  let favoriteButtonHTML = currentUser ? `<button class="favorite-button">${favoriteButtonText}</button>` : ``;
 
   return $(`
       <li id="${story.storyId}">
-        ${buttonHTML}
+        ${deleteButtonHTML}
+        ${favoriteButtonHTML}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -51,7 +55,7 @@ function putStoriesOnPage() {
 
   // loop through all of our stories and generate HTML for them
   for (let story of storyList.stories) {
-    const $story = generateStoryMarkup(story);
+    const $story = generateStoryMarkup(story, false);
     $allStoriesList.append($story);
   }
 
@@ -102,7 +106,7 @@ function putFavoritesOnPage() {
 
   // loop through all of the user's favorite stories and generate HTML for them
   for (let favoriteStory of currentUser.favorites) {
-    const $favoriteStory = generateStoryMarkup(favoriteStory);
+    const $favoriteStory = generateStoryMarkup(favoriteStory, false);
     $allStoriesList.append($favoriteStory);
   }
 
@@ -117,7 +121,7 @@ function putOwnStoriesOnPage() {
 
   // loop through all of the user's own stories and generate HTML for them
   for (let ownStory of currentUser.ownStories) {
-    const $ownStory = generateStoryMarkup(ownStory);
+    const $ownStory = generateStoryMarkup(ownStory, true);
     $allStoriesList.append($ownStory);
   }
 
