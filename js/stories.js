@@ -78,13 +78,16 @@ $allStoriesList.on("click", ".favorite-button", async function(event) {
   }
 });
 
-//If user is viewing only their own stories and they click the Delete button next to one of their stories, the story will be deleted from 3 places:
-// The API (a call will be made to delete the Story information), the current Story List of all stories to be displayed, and the current logged in user's
-// list of own stories. The user's updated list of own stories will then be displayed.
+//If user is viewing only their own stories and they click the Delete button next to one of their stories, the story will be deleted from 4 places:
+// The API (a call will be made to delete the Story information), the current Story List of all stories to be displayed, the user's favorited stories
+// (if the story is a user favorite) and the current logged in user's list of own stories. The user's updated list of own stories will then be displayed.
 $allStoriesList.on("click", ".delete-button", async function(event) {
   console.debug("Delete button clicked", event);
 
   const deletedStoryId = $(this).parent().attr("id");
+  if (currentUser.isStoryIdInFavorites(deletedStoryId)) {
+    currentUser = await User.removeStoryFromFavorites(currentUser.loginToken, currentUser.username, deletedStoryId);
+  }
   const deletedStory = await storyList.deleteStory(currentUser, deletedStoryId);
   currentUser.removeStoryFromOwnStories(deletedStory);
 
